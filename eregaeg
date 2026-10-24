@@ -1,0 +1,8 @@
+local requestFn = (syn and syn.request) or http_request or request
+assert(type(requestFn) == "function", "executor request API is required")
+assert(type(gethwid) == "function", "gethwid is required")
+local response = requestFn({Url = "https://lua-vault-712.scriptfactory712.chatgpt.site/raw/loader.lua?token=aLb-MMHJDqSZW9d9Sz-M4p8geF1fFReTYmIJoPByDIs", Method = "GET", Headers = {["X-Device-ID"] = tostring(gethwid())}})
+assert(response and response.StatusCode == 200, "access denied")
+local run, err = loadstring(response.Body)
+assert(run, err)
+return run()
